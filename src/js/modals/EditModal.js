@@ -7,8 +7,6 @@ export default class EditModal {
     this.id = id;
     this.name = name;
     this.description = description;
-
-    this.addListeners();
   }
 
   init() {
@@ -75,6 +73,8 @@ export default class EditModal {
     this.modal.appendChild(this.formEl);
 
     document.body.appendChild(this.modal);
+
+    this.addListeners();
   }
 
   addListeners() {
