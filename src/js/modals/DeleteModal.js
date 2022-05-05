@@ -1,5 +1,12 @@
+import Request from '../Request';
+
 export default class DeleteModal {
-  constructor() {
+  constructor(id) {
+    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
+    this.id = id;
+  }
+
+  init() {
     this.modal = document.createElement('div');
     this.modal.classList.add('modal-wrapper');
 
@@ -22,7 +29,7 @@ export default class DeleteModal {
     this.ok.classList.add('modal-control-element');
     this.ok.classList.add('modal-save');
     this.ok.type = 'submit';
-    this.ok.textContent = 'Сохранить';
+    this.ok.textContent = 'Удалить';
     this.cancel = document.createElement('button');
     this.cancel.classList.add('modal-control-element');
     this.cancel.classList.add('modal-cancel');
@@ -40,5 +47,16 @@ export default class DeleteModal {
     this.modal.appendChild(this.modalEl);
 
     document.body.appendChild(this.modal);
+
+    this.addListeners();
+  }
+
+  addListeners() {
+    this.cancel.addEventListener('click', () => {
+      document.body.removeChild(this.modal);
+    });
+    this.ok.addEventListener('click', () => {
+      this.request.removeTicket(this.id);
+    });
   }
 }

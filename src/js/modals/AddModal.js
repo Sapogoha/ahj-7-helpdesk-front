@@ -1,5 +1,11 @@
+import Request from '../Request';
+
 export default class AddModal {
   constructor() {
+    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
+  }
+
+  init() {
     this.modal = document.createElement('div');
     this.modal.classList.add('form-wrapper');
 
@@ -62,16 +68,16 @@ export default class AddModal {
 
     document.body.appendChild(this.modal);
 
-    this.closeModal = this.closeModal.bind(this);
+    this.addListeners();
   }
 
-  // addListeners() {
-  //   this.cancel.addEventListener('click', () => {
-  //     this.closeModal();
-  //   });
-  // }
+  addListeners() {
+    this.cancel.addEventListener('click', () => {
+      document.body.removeChild(this.modal);
+    });
 
-  // closeModal() {
-  //   document.body.removeChild(this.modal);
-  // }
+    this.ok.addEventListener('click', () => {
+      this.request.createTicket(this.addName.value, this.addDescription.value);
+    });
+  }
 }

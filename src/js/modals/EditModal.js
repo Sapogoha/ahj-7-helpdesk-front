@@ -1,5 +1,17 @@
+import Request from '../Request';
+
 export default class EditModal {
-  constructor() {
+  constructor(id, name, description) {
+    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
+
+    this.id = id;
+    this.name = name;
+    this.description = description;
+
+    this.addListeners();
+  }
+
+  init() {
     this.modal = document.createElement('div');
     this.modal.classList.add('form-wrapper');
 
@@ -18,11 +30,12 @@ export default class EditModal {
     this.addNameLable.classList.add('input-lable');
     this.addNameLable.textContent = 'Краткое описание';
 
-    this.addName = document.createElement('input');
+    this.addName = document.createElement('textarea');
     this.addName.classList.add('edit-form-name');
     this.addName.classList.add('form-input');
     this.addName.name = 'name';
     this.addName.required = true;
+    this.addName.textContent = this.name;
 
     this.addNameLable.appendChild(this.addName);
 
@@ -35,6 +48,7 @@ export default class EditModal {
     this.addDescription.classList.add('form-input');
     this.addDescription.name = 'description';
     this.addDescription.required = true;
+    this.addDescription.textContent = this.description;
 
     this.addDescriptionLable.appendChild(this.addDescription);
 
@@ -61,5 +75,18 @@ export default class EditModal {
     this.modal.appendChild(this.formEl);
 
     document.body.appendChild(this.modal);
+  }
+
+  addListeners() {
+    this.cancel.addEventListener('click', () => {
+      document.body.removeChild(this.modal);
+    });
+    this.ok.addEventListener('click', () => {
+      this.request.editTicket(
+        this.id,
+        this.addName.value,
+        this.addDescription.value,
+      );
+    });
   }
 }

@@ -5,6 +5,7 @@ import AddModal from './modals/AddModal';
 export default class Board {
   constructor() {
     this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
+    // this.request = new Request('http://localhost:7070/');
   }
 
   init() {
@@ -12,6 +13,7 @@ export default class Board {
     itemsRequest.then((resolve) => {
       this.data = [];
       JSON.parse(resolve).forEach((item) => this.data.push(item));
+
       this.drawTickets();
     });
   }
@@ -45,7 +47,7 @@ export default class Board {
 
   addListeners() {
     this.addTicket.addEventListener('click', () => {
-      this.addModal = new AddModal();
+      this.addModal = new AddModal().init();
     });
   }
 }

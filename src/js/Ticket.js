@@ -1,5 +1,6 @@
 import EditModal from './modals/EditModal';
 import DeleteModal from './modals/DeleteModal';
+import Request from './Request';
 
 export default class Ticket {
   constructor(ticket) {
@@ -8,6 +9,8 @@ export default class Ticket {
     this.description = ticket.description;
     this.status = ticket.status;
     this.created = Number(ticket.created);
+    this.addListeners = this.addListeners.bind(this);
+    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
   }
 
   renderDate(timeStamp) {
@@ -35,12 +38,10 @@ export default class Ticket {
     this.status
       ? this.statusEl.classList.add('status-done')
       : this.statusEl.classList.add('status-todo');
-    // this.card.appendChild(this.statusEl);
 
     this.nameEl = document.createElement('div');
     this.nameEl.classList.add('ticket-name');
     this.nameEl.textContent = this.name;
-    // this.card.appendChild(this.nameEl);
 
     this.timeEl = document.createElement('div');
     this.timeEl.classList.add('ticket-time');
@@ -80,23 +81,29 @@ export default class Ticket {
 
   addListeners() {
     this.edit.addEventListener('click', () => {
-      this.addModal = new EditModal();
+      this.addModal = new EditModal(
+        this.id,
+        this.name,
+        this.description,
+      ).init();
     });
     this.delete.addEventListener('click', () => {
-      this.addModal = new DeleteModal();
+      this.addModal = new DeleteModal(this.id).init();
     });
-    // this.statusEl.addEventListener('click', () => {
-    //   console.log(this.status);
-    //   if (this.status) {
-    //     this.statusEl.classList.remove('status-todo');
-    //     this.statusEl.classList.add('status-done');
-    //     this.status = false;
-    //   } else {
-    //     this.statusEl.classList.remove('status-done');
-    //     this.statusEl.classList.add('status-todo');
-    //     this.status = true;
-    //   }
-    //   console.log(this.status);
-    // });
+
+    this.nameEl.addEventListener('click', () => {
+      this.descriptionEl.classList.contains('hidden')
+        ? this.descriptionEl.classList.remove('hidden')
+        : this.descriptionEl.classList.add('hidden');
+    });
+    this.timeEl.addEventListener('click', () => {
+      this.descriptionEl.classList.contains('hidden')
+        ? this.descriptionEl.classList.remove('hidden')
+        : this.descriptionEl.classList.add('hidden');
+    });
+
+    this.statusEl.addEventListener('click', () => {
+      this.request.changeStatus(this.id);
+    });
   }
 }
