@@ -1,8 +1,9 @@
 import Request from '../Request';
+import server from '../server';
 
 export default class EditModal {
   constructor(id, name, description) {
-    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
+    this.request = new Request(server);
 
     this.id = id;
     this.name = name;

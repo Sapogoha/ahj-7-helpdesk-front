@@ -1,6 +1,6 @@
 export default class Request {
   constructor(serverURL) {
-    this.server = serverURL;
+    this.server = `${serverURL}tickets`;
   }
 
   get(params) {
@@ -66,6 +66,6 @@ export default class Request {
   removeTicket(id) {
     const params = new URLSearchParams();
     params.append('id', id);
-    return this.post('DELETE', '?method=remove', params);
+    return this.post('DELETE', `/remove/${id}`, params);
   }
 }

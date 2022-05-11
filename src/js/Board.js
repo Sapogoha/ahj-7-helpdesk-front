@@ -1,11 +1,11 @@
 import Ticket from './Ticket';
 import Request from './Request';
 import AddModal from './modals/AddModal';
+import server from './server';
 
 export default class Board {
   constructor() {
-    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
-    // this.request = new Request('http://localhost:7070/');
+    this.request = new Request(server);
   }
 
   init() {
@@ -13,7 +13,6 @@ export default class Board {
     itemsRequest.then((resolve) => {
       this.data = [];
       JSON.parse(resolve).forEach((item) => this.data.push(item));
-
       this.drawTickets();
     });
   }

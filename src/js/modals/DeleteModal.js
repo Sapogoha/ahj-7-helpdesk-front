@@ -1,8 +1,9 @@
 import Request from '../Request';
+import server from '../server';
 
 export default class DeleteModal {
   constructor(id) {
-    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
+    this.request = new Request(server);
     this.id = id;
   }
 
@@ -57,6 +58,8 @@ export default class DeleteModal {
     });
     this.ok.addEventListener('click', () => {
       this.request.removeTicket(this.id);
+      // document.body.removeChild(this.modal);
+      window.location.reload();
     });
   }
 }

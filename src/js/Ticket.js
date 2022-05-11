@@ -1,6 +1,7 @@
 import EditModal from './modals/EditModal';
 import DeleteModal from './modals/DeleteModal';
 import Request from './Request';
+import server from './server';
 
 export default class Ticket {
   constructor(ticket) {
@@ -10,7 +11,7 @@ export default class Ticket {
     this.status = ticket.status;
     this.created = Number(ticket.created);
     this.addListeners = this.addListeners.bind(this);
-    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
+    this.request = new Request(server);
   }
 
   renderDate(timeStamp) {
@@ -104,6 +105,7 @@ export default class Ticket {
 
     this.statusEl.addEventListener('click', () => {
       this.request.changeStatus(this.id);
+      window.location.reload();
     });
   }
 }

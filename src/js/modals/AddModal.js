@@ -1,8 +1,9 @@
 import Request from '../Request';
+import server from '../server';
 
 export default class AddModal {
   constructor() {
-    this.request = new Request('https://ahj-7-helpdesk-back.herokuapp.com/');
+    this.request = new Request(server);
   }
 
   init() {
