@@ -57,9 +57,18 @@ export default class DeleteModal {
       document.body.removeChild(this.modal);
     });
     this.ok.addEventListener('click', () => {
-      this.request.removeTicket(this.id);
-      // document.body.removeChild(this.modal);
-      window.location.reload();
+      document.body.removeChild(this.modal);
+      this.removeTicket(this.id);
+    });
+  }
+
+  removeTicket(id) {
+    const request = this.request.removeTicket(id);
+    request.then(() => {
+      const ticketList = document.querySelector('.ticket-list');
+      const removedTicket = document.querySelector(`[data-id='${id}']`);
+
+      ticketList.removeChild(removedTicket);
     });
   }
 }

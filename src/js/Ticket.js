@@ -104,8 +104,17 @@ export default class Ticket {
     });
 
     this.statusEl.addEventListener('click', () => {
-      this.request.changeStatus(this.id);
-      window.location.reload();
+      this.changeStatus(this.id);
+    });
+  }
+
+  changeStatus(id) {
+    const request = this.request.changeStatus(id);
+    request.then(() => {
+      const changedTicket = document.querySelector(`[data-id='${id}']`);
+      const status = changedTicket.querySelector('.ticket-status');
+      status.classList.toggle('status-todo');
+      status.classList.toggle('status-done');
     });
   }
 }

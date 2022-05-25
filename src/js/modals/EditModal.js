@@ -83,11 +83,21 @@ export default class EditModal {
       document.body.removeChild(this.modal);
     });
     this.ok.addEventListener('click', () => {
-      this.request.editTicket(
-        this.id,
-        this.addName.value,
-        this.addDescription.value,
+      this.editTicket(this.id, this.addName.value, this.addDescription.value);
+    });
+  }
+
+  editTicket(id, name, description) {
+    const request = this.request.editTicket(id, name, description);
+    request.then(() => {
+      const editedTicket = document.querySelector(`[data-id='${id}']`);
+      const ticketName = editedTicket.querySelector('.ticket-name');
+      const ticketDescription = editedTicket.querySelector(
+        '.ticket-description',
       );
+
+      ticketName.textContent = this.addName.value;
+      ticketDescription.textContent = this.addDescription.value;
     });
   }
 }
