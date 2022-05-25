@@ -82,11 +82,7 @@ export default class Ticket {
 
   addListeners() {
     this.edit.addEventListener('click', () => {
-      this.addModal = new EditModal(
-        this.id,
-        this.name,
-        this.description,
-      ).init();
+      this.addModal = new EditModal(this.id).init();
     });
     this.delete.addEventListener('click', () => {
       this.addModal = new DeleteModal(this.id).init();

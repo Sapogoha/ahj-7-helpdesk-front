@@ -2,12 +2,15 @@ import Request from '../Request';
 import server from '../server';
 
 export default class EditModal {
-  constructor(id, name, description) {
+  constructor(id) {
     this.request = new Request(server);
 
     this.id = id;
-    this.name = name;
-    this.description = description;
+    this.toEdit = document.querySelector(`[data-id='${id}']`);
+    this.name = this.toEdit.querySelector('.ticket-name').innerText;
+    this.description = this.toEdit.querySelector(
+      '.ticket-description',
+    ).innerText;
   }
 
   init() {
@@ -82,8 +85,11 @@ export default class EditModal {
     this.cancel.addEventListener('click', () => {
       document.body.removeChild(this.modal);
     });
-    this.ok.addEventListener('click', () => {
+    this.ok.addEventListener('click', (event) => {
+      event.preventDefault();
+      // document.body.removeChild(this.modal);
       this.editTicket(this.id, this.addName.value, this.addDescription.value);
+      document.body.removeChild(this.modal);
     });
   }
 
