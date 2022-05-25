@@ -85,11 +85,9 @@ export default class EditModal {
     this.cancel.addEventListener('click', () => {
       document.body.removeChild(this.modal);
     });
-    this.ok.addEventListener('click', (event) => {
-      event.preventDefault();
-      // document.body.removeChild(this.modal);
-      this.editTicket(this.id, this.addName.value, this.addDescription.value);
+    this.ok.addEventListener('click', () => {
       document.body.removeChild(this.modal);
+      this.editTicket(this.id, this.addName.value, this.addDescription.value);
     });
   }
 
